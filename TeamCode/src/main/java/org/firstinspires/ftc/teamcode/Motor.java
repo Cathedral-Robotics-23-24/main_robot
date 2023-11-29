@@ -1,9 +1,9 @@
 package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
 
 
 @TeleOp(name="motor-0")
@@ -26,9 +26,6 @@ public class Motor extends OpMode {
         // Setup 'gamepad' eventually.
         // Left Trigger = Forward
         // Right trigger = Backward
-
-        // Testing Pull Request
-
 
         // Backward
         motor.setPower(gamepad1.right_trigger);
