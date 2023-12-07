@@ -42,6 +42,7 @@ public class Motor extends OpMode {
 
             claw1.setPower(gamepad1.left_stick_y);
             claw2.setPower(gamepad1.left_stick_y);
+        // End of movements
 
 
     }
