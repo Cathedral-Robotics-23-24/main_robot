@@ -12,13 +12,17 @@ public class Motor extends OpMode {
     DcMotor motor;
     DcMotor motor2;
 
+    DcMotor claw1;
+    DcMotor claw2;
+
 
     @Override
     public void init()
     {
         motor2 = hardwareMap.get(DcMotor.class, "motor-RL");
         motor = hardwareMap.get(DcMotor.class, "motor-RR");
-
+        claw1 = hardwareMap.get(DcMotor.class, "claw-1");
+        claw2 = hardwareMap.get(DcMotor.class, "claw-2");
     }
 
     public void loop()
@@ -27,20 +31,19 @@ public class Motor extends OpMode {
         // Left Trigger = Forward
         // Right trigger = Backward
 
-        // Backward
-        motor.setPower(gamepad1.right_trigger);
-        motor2.setPower(gamepad1.right_trigger);
-        motor.setDirection(DcMotorSimple.Direction.REVERSE);
-        motor2.setDirection(DcMotorSimple.Direction.FORWARD);
+        // Movements
 
-        // Forward
-        motor.setPower(gamepad1.left_trigger);
-        motor2.setPower(gamepad1.left_trigger);
+            motor.setPower(gamepad1.right_stick_y);
+            motor.setPower(gamepad1.right_stick_y);
+            motor2.setPower(gamepad1.right_stick_x);
+            motor2.setPower(gamepad1.right_stick_y);
+            motor2.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        motor.setDirection(DcMotorSimple.Direction.FORWARD);
-        motor2.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        
+            claw1.setPower(gamepad1.left_stick_y);
+            claw2.setPower(gamepad1.left_stick_y);
+        // End of movements
+
 
     }
 
