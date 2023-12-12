@@ -3,6 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 
@@ -11,9 +12,12 @@ public class Motor extends OpMode {
 
     DcMotor motor;
     DcMotor motor2;
-
-    DcMotor claw1;
+    DcMotor claw;
     DcMotor claw2;
+
+    Servo claw_hand;
+
+    Servo extension_claw;
 
 
     @Override
@@ -21,30 +25,34 @@ public class Motor extends OpMode {
     {
         motor2 = hardwareMap.get(DcMotor.class, "motor-RL");
         motor = hardwareMap.get(DcMotor.class, "motor-RR");
-        claw1 = hardwareMap.get(DcMotor.class, "claw-1");
+
+        claw = hardwareMap.get(DcMotor.class, "claw-1");
         claw2 = hardwareMap.get(DcMotor.class, "claw-2");
+
+        claw_hand = hardwareMap.get(Servo.class, "claw-servo");
+        extension_claw = hardwareMap.get(Servo.class, "extend-servo");
+
     }
 
     public void loop()
     {
-        // Setup 'gamepad' eventually.
-        // Left Trigger = Forward
-        // Right trigger = Backward
+        motor.setPower(gamepad1.right_stick_x);
+        motor2.setPower(gamepad1.right_stick_x);
 
-        // Movements
+        motor.setPower(gamepad1.right_stick_y);
+        motor2.setPower(gamepad1.right_stick_y);
 
-            motor.setPower(gamepad1.right_stick_y);
-            motor.setPower(gamepad1.right_stick_y);
-            motor2.setPower(gamepad1.right_stick_x);
-            motor2.setPower(gamepad1.right_stick_y);
-            motor2.setDirection(DcMotorSimple.Direction.REVERSE);
+        if (gamepad1.a)
+        {
+            claw_hand.setPosition(0.85);
 
-
-            claw1.setPower(gamepad1.left_stick_y);
-            claw2.setPower(gamepad1.left_stick_y);
-        // End of movements
+        } else if (gamepad1.b)
+        {
+            claw_hand.setPosition(0);
+        }
 
 
+        extension_claw.setPosition(gamepad1.right_trigger);
     }
 
 }
