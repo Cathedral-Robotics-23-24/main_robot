@@ -3,6 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 
@@ -11,6 +12,12 @@ public class Motor extends OpMode {
 
     DcMotor motor;
     DcMotor motor2;
+    DcMotor claw;
+    DcMotor claw2;
+
+    Servo claw_hand;
+
+    Servo extension_claw;
 
 
     @Override
@@ -19,29 +26,33 @@ public class Motor extends OpMode {
         motor2 = hardwareMap.get(DcMotor.class, "motor-RL");
         motor = hardwareMap.get(DcMotor.class, "motor-RR");
 
+        claw = hardwareMap.get(DcMotor.class, "claw-1");
+        claw2 = hardwareMap.get(DcMotor.class, "claw-2");
+
+        claw_hand = hardwareMap.get(Servo.class, "claw-servo");
+        extension_claw = hardwareMap.get(Servo.class, "extend-servo");
+
     }
 
     public void loop()
     {
-        // Setup 'gamepad' eventually.
-        // Left Trigger = Forward
-        // Right trigger = Backward
+        motor.setPower(gamepad1.right_stick_x);
+        motor2.setPower(gamepad1.right_stick_x);
 
-        // Backward
-        motor.setPower(gamepad1.right_trigger);
-        motor2.setPower(gamepad1.right_trigger);
-        motor.setDirection(DcMotorSimple.Direction.REVERSE);
-        motor2.setDirection(DcMotorSimple.Direction.FORWARD);
+        motor.setPower(gamepad1.right_stick_y);
+        motor2.setPower(gamepad1.right_stick_y);
 
-        // Forward
-        motor.setPower(gamepad1.left_trigger);
-        motor2.setPower(gamepad1.left_trigger);
+        if (gamepad1.a)
+        {
+            claw_hand.setPosition(0.85);
 
-        motor.setDirection(DcMotorSimple.Direction.FORWARD);
-        motor2.setDirection(DcMotorSimple.Direction.REVERSE);
+        } else if (gamepad1.b)
+        {
+            claw_hand.setPosition(0);
+        }
 
-        
 
+        extension_claw.setPosition(gamepad1.right_trigger);
     }
 
 }
